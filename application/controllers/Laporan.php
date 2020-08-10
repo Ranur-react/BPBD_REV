@@ -46,6 +46,7 @@ class Laporan extends CI_controller {
 		$this->parser->parse('template/template',$a);
 	}
 
+
 	function lap_kasusbencana()
 	{
 		$tgl1 =$this->input->post('tglawal');
@@ -55,6 +56,7 @@ class Laporan extends CI_controller {
 		$data['awal'] =$this->input->post('tglawal');
 		$data['akhir'] =$this->input->post('tglakhir');
 		$data['data']=$this->Modellaporan->lap_kasusbencana($tglawal,$tglakhir);
+		$data['title']="Laporan Bencana";
 		$this->load->view('laporan/laporan_kasusbencana',$data);
 	}
 	function kasusbencanarusak()

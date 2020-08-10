@@ -1,18 +1,8 @@
-<html lang="en" moznomarginboxes mozdisallowselectionprint> 
-<head>     
-	<title><?php echo $judul?></title>     
-	<meta charset="utf-8"> 
-</head>	
-	<body onLoad="window.print()"> <div id="laporan" style='page-break-after:always'> 
-	<?php               
-	foreach($data->result_array() as $i) 
-	{    
-	?>   
-<hr> 
+		<div id="laporan" style='page-break-after:always'> 
 		<table border="0" align="center" style="width:990px;margin-top:5px;border:none;marginbottom:0px;font-weight: bold;font-size: 16px"> 
 			<tr>
 				<td rowspan="4" align="center" style="width: 90px"><img src="<?php echo base_url().'images/logobpbd.jpg'?>" height="64" width="70"></td>     
-				<td align="center">Laporan Data Kasus Bencana Berdasarkan Kerusakan</td> 
+				<td align="center">Laporan Data Kasus Bencana Berdasarkan Korban</td> 
 			</tr> 
 			<tr>     
 				<td align="center">Pusat Pengendalian Operasi Penanggulangan Bencana</td> 
@@ -59,17 +49,15 @@
 						       
 					</tr>
 				<tr>
-                    <th colspan="3">Jenis Kerusakan </th>
+                    <th colspan="3"> Korban </th>
 					<th colspan="3"> Keterangan </th>
-					</tr>
-	<?php foreach($this->Modellaporan->lap_kasusbencanarusak_Kode($i['kodekasus'])->result_array() as $i): ?>
-
+				</tr>
+	<?php foreach($this->Modellaporan->lap_kasusbencana_kodekasus($i['kodekasus'])->result_array() as $i): ?>
 				<tr>
-					<td colspan="3" align="center"><?php echo $i['detjeniskerusakan'] ?></td>
-					<td colspan="3" align="center"><?php echo $i['detketerangan'] ?></td>
+					<td colspan="3" align="center"><?php echo $i['dnamakorban'] ?></td>
+					<td colspan="3" align="center"><?php echo $i['dketerangan'] ?></td>    
 				</tr>
 	<?php endforeach; ?>					
-
 			
 				
 				</table> 
@@ -117,8 +105,4 @@
 						</tr> 
 
 					</table> 
-				</div>
-				<hr> 
-<?php }?>				
-			</body>
-			</html> 
+				</div> 
