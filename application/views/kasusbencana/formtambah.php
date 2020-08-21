@@ -1,3 +1,43 @@
+
+<script type="text/javascript">
+    $(document).ready( function(e) {
+
+        $(document).on('change', '.kd_kecamatan', function(e) {
+        let kode= "&a=" +$('.kd_kecamatan').val();
+              $.ajax({
+                    url: '<?= site_url('kasusbencana/combo_tambah_nagari')  ?>',
+                    type: "post",
+                    data: kode,
+                    cache: false,
+                    success: function(response) {
+                        // alert("Golongan harus dipilih");
+                        // $('.tampil_combo').html('');
+                        // $('.tampil_combo').html(response);
+                                  // $.each(response.datanagari, function(i, m) {
+                                  //   $('.' + i).text(m);
+                                  // });
+                                    var datajson = jQuery.parseJSON(response);
+                                    // alert(datajson['data']);
+                                    console.log(datajson.data);
+ 
+                            // $("#landingPad").append("<li>" + value + "</li>");
+                        // });
+                        // $('.kkodenagari').empty();
+                        // for (var i = 0; i < 10; i++) {
+                        //     $('.kkodenagari').append( new Option("1","response.ciek") );
+
+                        // }
+                        // // $('.kkodenagari').val("response");
+                    }
+                });
+         
+
+    });
+
+    });
+
+</script>
+
 <script>
     let tampiltemp_korban=()=>{
       $.ajax({
@@ -127,33 +167,48 @@ $(document).ready(function(e){
     			</tr>
 			</tr>
 			<tr>
-    			<tr>         
-        		<td>Tanggal Kejadian</td>         
-	    		<td width="100"><div class="col-sm-114"><input type="date" class="form-control" name="tglkejadian" id="tglkejadian"></td>
-        		<td>Kecamatan</td>         
-	    		<td><select class="form-control select2" style="width: 100%;" name="kkodekecamatan" id="kkodekecamatan" required>            
-        		<option selected>-Pilih-</option>                 
-        		<?php foreach($datakecamatan->result_array() as $k){?>             
-	    		<option value="<?php echo $k['kodekecamatan']?>"><?php echo $k['namakecamatan']?></option>             
-        		<?php }?>             
-        		</select></td>
-        		<td>Jumlah Dana Penanggulangan</td>         
-	    		<td ><div class="col-sm-114"><input type="text" class="form-control" name="jumlahdanapenanggulangan" id="jumlahdanapenanggulangan"></td>
-    			</tr>
+        <tr>
+          <td>Tanggal Kejadian</td>         
+	    		<td width="100">
+            <div class="col-sm-114">
+                  <input type="date" class="form-control" name="tglkejadian" id="tglkejadian">
+            </td>
+        	<td>Kecamatan</td>
+          <td>
+              <select class="form-control kd_kecamatan" style="width: 100%;" name="kkodekecamatan" id="kkodekecamatan" required>
+                <option selected>-Pilih-</option>                 
+              		<?php foreach($datakecamatan->result_array() as $k){?>             
+	    		      <option value="<?php echo $k['kodekecamatan']?>"><?php echo $k['namakecamatan']?></option>             
+              		<?php }?>             
+        		</select>
+          </td>
+          <td>Jumlah Dana Penanggulangan</td>
+          <td >
+            <div class="col-sm-114">
+              <input type="text" class="form-control" name="jumlahdanapenanggulangan" id="jumlahdanapenanggulangan"></td>
+        </tr>
 			</tr>
 			<tr>
-    			<tr>         
-        		<td>Waktu Kejadian</td>         
-	    		<td><div class="col-sm-114"><input type="text" class="form-control" name="waktukejadian" id="waktukejadian"></td>
-		        <td>Nagari</td>         
-			    <td><select class="form-control select2" style="width: 100%;" name="kkodenagari" id="kkodenagari" required>            
-        		<option selected>-Pilih-</option>                 
-        		<?php foreach($datanagari->result_array() as $k){?>             
-	    		<option value="<?php echo $k['kodenagari']?>"><?php echo $k['namanagari']?></option>             
-        		<?php }?>             
-        		</select></td>
-        		<td>Tindak Lanjut</td>         
-	    		<td ><div class="col-sm-114"><input type="text" class="form-control" name="tindaklanjut" id="tindaklanjut"></td>
+    			<tr>
+            <td>Waktu Kejadian</td>
+            <td>
+              <div class="col-sm-114"><input type="text" class="form-control" name="waktukejadian" id="waktukejadian">
+              </td>
+              <td>Nagari
+              </td>
+              <td>
+                <!-- <div class="tampil_combo"></div> -->
+                <select class="form-control kkodenagari " style="width: 100%;" name="kkodenagari" id="kkodenagari" required>            
+              		<option selected>-Pilih-</option>                 
+              		<?php foreach($datanagari->result_array() as $k){?>             
+        	    		<option value="<?php echo $k['kodenagari']?>"><?php echo $k['namanagari']?>
+                  </option>             
+              		<?php }?>             
+        		    </select>
+              </td>
+              <td>Tindak Lanjut</td>
+              <td >
+                <div class="col-sm-114"><input type="text" class="form-control" name="tindaklanjut" id="tindaklanjut"></td>
     			</tr>
 			</tr>
 			<tr>
@@ -165,14 +220,17 @@ $(document).ready(function(e){
 	    		<option value="<?php echo $k['kodejenis']?>"><?php echo $k['jenisbencana']?></option>             
         		<?php }?>             
         		</select>   
-	    		</td>
-        		<td>Korong</td>         
-	    		<td><select class="form-control select2" style="width: 100%;" name="kkodekorong" id="kkodekorong" required>            
+	    		</td><td>Korong</td>         
+	    		<td>
+            <!-- <div class="tampil_combo_korong"></div> -->
+            <select class="form-control select2" style="width: 100%;" name="kkodekorong" id="kkodekorong" required>            
         		<option selected>-Pilih-</option>                 
         		<?php foreach($datakorong->result_array() as $k){?>             
 	    		<option value="<?php echo $k['kodekorong']?>"><?php echo $k['namakorong']?></option>             
         		<?php }?>             
-        		</select></td>
+        		</select>
+
+          </td>
     			</tr>
 			</tr>
  			</table>    
@@ -180,7 +238,7 @@ $(document).ready(function(e){
  		</div>  
         <div class="col-xs-12">   
             <div class="box-body table-responsive ">     
-                           <table class="table table-bordered">       
+                           <table class="table table-bordered" >       
             <tr>         
             <td>Kode Korban</td>         
             <td width="100"><div class="col-sm-114"><input type="text" class="form-control" readonly name="kodekorban" id="kodekorban">
@@ -197,19 +255,20 @@ $(document).ready(function(e){
             <td><input type="text" class="form-control" readonly name="namakorban" id="namakorban">
             </td>
            
-            <td>Alamat</td>        
+            <td style="vertical-align: middle;">Alamat</td>        
             <td width="100">
             <div class="col-sm-12"><input type="text" class="form-control" name="alamat" id="alamat">
             </div>
             </td> 
         
-            <td>Jenis Kelamin</td>         
+            <td >Jenis Kelamin</td>         
             <td width="70"> 
             <div class="col-sm-14"><input type="text" class="form-control" name="jeniskelamin" id="jeniskelamin">
             </div>
             </td> 
 
-            <td>Keterangan</td>         
+            <td style="vertical-align: middle;">Keterangan
+            </td>         
             <td width="70"> 
             <div class="col-sm-14"><input type="text" class="form-control" name="keterangan" id="keterangan">
             </div>
@@ -235,23 +294,23 @@ $(document).ready(function(e){
             <div class="box-body table-responsive">     
             <table class="table table-bordered">       
             <tr>         
-	        <td>Kode Kerusakan</td>         
+	        <td style="vertical-align: middle;">Kode Kerusakan</td>         
 	        <td width="100"><div class="col-sm-114"><input type="text" class="form-control" name="idtempkerusakan" id="idtempkerusakan">
             </div>
             <?php echo $this->session->flashdata('error');?>
 	        </td>  
 	     
- 	        <td>Jenis Kerusakan</td>         
+ 	        <td style="vertical-align: middle;">Jenis Kerusakan</td>         
 	        <td><input type="text" class="form-control" name="jeniskerusakan" id="jeniskerusakan">
 	        </td>
 	       
- 	        <td>Jumlah Kerusakan</td>        
+ 	        <td style="vertical-align: middle;">Jumlah Kerusakan</td>        
  	        <td width="100">
 	        <div class="col-sm-12"><input type="text" class="form-control" name="jumlah" id="jumlah">
         	</div>
         	</td> 
         
-        	<td>Keterangan</td>         
+        	<td style="vertical-align: middle;">Keterangan</td>         
         	<td width="70"> 
         	<div class="col-sm-14"><input type="text" class="form-control" name="keteranganrusak" id="keteranganrusak">
         	</div>

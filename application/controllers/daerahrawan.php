@@ -18,21 +18,34 @@ class daerahrawan extends CI_Controller {
         $a['konten']=$this->load->view('daerahrawan/viewdata',$data,TRUE);
         $this->parser->parse('template/template',$a);
     }
+public function combo_tambah_nagari(){
+    $kecamatan=$this->input->post('a');
+    $d['datanagari']   =$this->Modelkorong->datanagari_Kecam($kecamatan);
+    $this->load->view('daerahrawan/tampil_combo_nagari.php', $d);
+}
+public function combo_tambah_korong(){
+    $nagari=$this->input->post('a');
+    $d['datakorong']   =$this->Modelkorong->datakorong_nagari($nagari);
+    $this->load->view('daerahrawan/tampil_combo_korong.php', $d);
+}
     public function tambah ()
     {
         $a['judul']      = 'Input Data Daerah Rawan';
-        $d['datakorong']   =$this->rawan->datakorong();
+        // $d['datakorong']   =$this->Modelkorong->datakorong();
+        // $d['datanagari']   =$this->Modelnagari->datanagari();
+        $d['datakecamatan']   =$this->Modelkecamatan->datakecamatan();
         $d['datajenisbencana']   =$this->rawan->datajenisbencana();
         $a['menu']=$this->load->view('template/menu','',TRUE);
         $a['konten']=$this->load->view('daerahrawan/formtambah',$d,true);
         $this->parser->parse('template/template',$a);
     }
+    
 
     function simpantransaksi()
     {
         $kodedaerahrawan=$this->input->post('kodedaerahrawan');
         $dkodekorong=$this->input->post('dkodekorong');
-        $dkodenagari=$this->input->post('dkodenagari');
+        $dkodenagari=$this->input->post('kode_nagari');
         $dkodekecamatan=$this->input->post('dkodekecamatan');
         $dkodejenisbencana=$this->input->post('dkodejenisbencana');
         $keterangan=$this->input->post('keterangan');
@@ -93,6 +106,16 @@ class daerahrawan extends CI_Controller {
             $this->session->set_flashdata('pesan', $pesan);
             redirect('daerahrawan/index');
         }
+    }
+
+    public function combo_nagari_perkecamatan(){
+        $kecamatan=$this->input->post('a');
+        $d['datanagari']   =$this->Modelnagari->datanagari_Kecam($kecamatan);
+        $this->load->view('korong/tampil_combo_nagari.php', $d);
+    }
+    public function combo_nagari(){
+        $d['datanagari']   =$this->Modelnagari->datanagari();
+        $this->load->view('korong/tampil_combo_nagari.php', $d);
     }
 
 }

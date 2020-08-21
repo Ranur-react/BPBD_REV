@@ -77,6 +77,8 @@ class Laporan extends CI_controller {
 		$tglakhir= date("Y-m-d",strtotime($tgl2));
 		$data['awal'] =$this->input->post('tglawal');
 		$data['akhir'] =$this->input->post('tglakhir');
+		$data['title']="Laporan Kerusakan Bencana";
+
 		$data['data']=$this->Modellaporan->lap_kasusbencanarusak($tglawal,$tglakhir);
 		$this->load->view('laporan/laporan_kasusbencanarusak',$data);
     }

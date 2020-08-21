@@ -5,13 +5,13 @@
 	<title><?= $title ?></title>
 </head>
 <body>
-	<hr>
+	<hr style="border-top: 2px dashed   grey;">
 		<?php               
 	foreach($data->result_array() as $i) 
 	{   
 		 include('tabel_1.php'); 
 	?>  
-	<hr>
+	<hr style="border-top: 2px dashed   grey;">
 		<?php } ?>
 	 
 </body>

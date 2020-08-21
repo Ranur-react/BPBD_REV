@@ -20,37 +20,27 @@
                         <span style="font-weight: bold; color: red;"><?php echo form_error('kodedaerahrawan') ?></span>
                     </div>
                     </div>
+
                     <div class="form-group">
-                    <label class="col-sm-3">Nama Daerah / Korong</label>
-                    <div class="col-sm-4"  style="width: 60%;">
-                    <select class="form-control select2" style="width: 100%;" name="dkodekorong" id="dkodekorong" required>            
-                    <option selected>-Pilih-</option>                 
-                    <?php foreach($datakorong->result_array() as $k){?>             
-	                <option value="<?php echo $k['kodekorong']?>"><?php echo $k['namakorong']?></option>             
-                    <?php }?>             
-                    </select>
+                    <label class="col-sm-3">Nama Kecamatan</label>
+                    <div class="col-sm-4" style="width:60%">
+                        <select class="form-control select2 kd_kecamatan" style="width: 100%;" name="dkodekecamatan" id="dkodekecamatan" required>            
+                        <option selected>-Pilih-</option>                 
+                        <?php foreach($datakecamatan->result_array() as $k){?>             
+                        <option value="<?php echo $k['kodekecamatan']?>"><?php echo $k['namakecamatan']?></option>             
+                        <?php }?>             
+                        </select>
                     </div>
                     </div>
                     <div class="form-group">
                     <label class="col-sm-3">Nama Nagari</label>
-                    <div class="col-sm-4" style="width:60%">
-                    <select class="form-control select2" style="width: 100%;" name="dkodenagari" id="dkodenagari" required>            
-                    <option selected>-Pilih-</option>                 
-                    <?php foreach($datakorong->result_array() as $k){?>             
-	                <option value="<?php echo $k['kode_nagari']?>"><?php echo $k['namanagari']?></option>             
-                    <?php }?>             
-                    </select>
-                    </div>
+                      <div class="col-sm-4 tampil_combo" style="width:60%">
+                        </div>
                     </div>
                     <div class="form-group">
-                    <label class="col-sm-3">Nama Kecamatan</label>
-                    <div class="col-sm-4" style="width:60%">
-                    <select class="form-control select2" style="width: 100%;" name="dkodekecamatan" id="dkodekecamatan" required>            
-                    <option selected>-Pilih-</option>                 
-                    <?php foreach($datakorong->result_array() as $k){?>             
-	                <option value="<?php echo $k['kd_kecamatan']?>"><?php echo $k['namakecamatan']?></option>             
-                    <?php }?>             
-                    </select>
+                    <label class="col-sm-3">Nama Daerah / Korong</label>
+                    <div class="col-sm-4 tampil_combo_korong"  style="width: 60%;">
+
                     </div>
                     </div>
                     <div class="form-group">
@@ -87,3 +77,39 @@
     </div>
 </div>
 <!-- /.row -->
+
+<script type="text/javascript">
+    $(document).ready( function(e) {
+        let kode= "&a=" +$('.kd_kecamatan').val();
+              $.ajax({
+                    url: '<?= site_url('daerahrawan/combo_tambah_nagari')  ?>',
+                    type: "post",
+                    data: kode,
+                    cache: false,
+                    success: function(response) {
+                        // alert("Golongan harus dipilih");
+                        $('.tampil_combo').html('');
+                        $('.tampil_combo').html(response);
+                    }
+                });
+
+        $(document).on('change', '.kd_kecamatan', function(e) {
+        let kode= "&a=" +$('.kd_kecamatan').val();
+              $.ajax({
+                    url: '<?= site_url('daerahrawan/combo_tambah_nagari')  ?>',
+                    type: "post",
+                    data: kode,
+                    cache: false,
+                    success: function(response) {
+                        // alert("Golongan harus dipilih");
+                        $('.tampil_combo').html('');
+                        $('.tampil_combo').html(response);
+                    }
+                });
+         
+
+    });
+
+    });
+
+</script>

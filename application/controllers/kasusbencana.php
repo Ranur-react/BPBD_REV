@@ -37,12 +37,30 @@ class Kasusbencana extends CI_Controller {
         $this->parser->parse('template/template',$a);
     }
 
+public function combo_tambah_nagari(){
+    $d[0]="";
+    $kecamatan=$this->input->post('a');
+    $datanagari   =$this->Modelkorong->datanagari_Kecam($kecamatan);
+    foreach($datanagari->result_array() as $k){
+                $d[$k['kodenagari']]=$k['namanagari'];
+    }
+    $json["data"]=$d;
+echo json_encode($json);    
 
+
+
+    // $this->load->view('daerahrawan/tampil_combo_nagari.php', $d);
+}
+public function combo_tambah_korong(){
+    $nagari=$this->input->post('a');
+    $d['datakorong']   =$this->Modelkorong->datakorong_nagari($nagari);
+    $this->load->view('daerahrawan/tampil_combo_korong.php', $d);
+}
     function simpantransaksi()
     {
         $kodekasus=$this->input->post('kodekasus');
-        $date=$this->input->post('tglkejadian');
-        $tglkejadian=date("Y-m-d",strtotime($date));
+        // $date=$this->input->post('tglkejadian');
+        $tglkejadian=$this->input->post('tglkejadian');
         $waktukejadian=$this->input->post('waktukejadian');
         $kkodejenis=$this->input->post('kkodejenis');
         $lokasi=$this->input->post('lokasi');
@@ -55,7 +73,7 @@ class Kasusbencana extends CI_Controller {
         $jumlahdanapenanggulangan=$this->input->post('jumlahdanapenanggulangan');
         $tindaklanjut=$this->input->post('tindaklanjut');
         $this->Modelkasusbencana->simpan($kodekasus,$tglkejadian,$waktukejadian,$kkodejenis,$lokasi,$kkodekecamatan,$kkodenagari,$kkodekorong,$taksirankerugian,$keterangan,$regutimpenanggulangan,$jumlahdanapenanggulangan,$tindaklanjut);
-        
+        // echo "$kkodekecamatan,$kkodenagari,$kkodekorong";
         redirect('kasusbencana/tambah');
 
     }

@@ -20,6 +20,13 @@ class Modelkorong extends CI_Model {
     {
         return $this->db->query("SELECT * FROM nagari JOIN kecamatan ON kode_kecamatan=kodekecamatan WHERE kodekecamatan='$val';");
     }
+        function datakorong_nagari($val)
+    {
+        return $this->db->query("SELECT * FROM `korong`
+JOIN `nagari`
+ ON `korong`.`kode_nagari`=`nagari`.`kodenagari`
+ WHERE `kodenagari`='$val';");
+    }
     function simpan($kodekorong,$namakorong,$kd_kecamatan,$kode_nagari) {
 
         return $this->db->query("insert into korong values('$kodekorong','$namakorong','$kd_kecamatan','$kode_nagari')");

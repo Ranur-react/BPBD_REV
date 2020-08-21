@@ -8,6 +8,10 @@ class Modelkecamatan extends CI_Model {
 function datakecamatan(){
     return $this->db->query("SELECT * FROM kecamatan");
 }
+    function datakorong()
+    {
+        return $this->db->query("SELECT *,namakecamatan,namanagari from korong JOIN nagari JOIN kecamatan ON kode_nagari=kodenagari AND kd_kecamatan=kodekecamatan");
+    }
     function simpandata() {
         $kodekecamatan = $this->input->post('kodekecamatan', TRUE);
         $namakecamatan = $this->input->post('namakecamatan', TRUE);

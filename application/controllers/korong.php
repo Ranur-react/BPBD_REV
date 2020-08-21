@@ -35,6 +35,7 @@ public function combo_nagari(){
     $d['datanagari']   =$this->korong->datanagari();
     $this->load->view('korong/tampil_combo.php', $d);
 }
+
     function simpantransaksi()
     {
         $kodekorong=$this->input->post('kodekorong');

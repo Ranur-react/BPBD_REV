@@ -2,6 +2,12 @@
 
 class Modelnagari extends CI_Model {
 
+function datanagari_Kecam($val)
+    {
+        return $this->db->query("SELECT * FROM nagari JOIN kecamatan ON kode_kecamatan=kodekecamatan WHERE kodekecamatan='$val';");
+    }
+
+
    public function ambildata($kodenagari) {
     return $this->db->query("SELECT *,namakecamatan FROM nagari JOIN kecamatan ON kode_kecamatan=kodekecamatan where kodenagari='$kodenagari'");}
 
