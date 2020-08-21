@@ -1,39 +1,55 @@
 
 <script type="text/javascript">
-    $(document).ready( function(e) {
+    $(document).ready( function(e) 
+    {
+        $(document).on('change', '.kd_kecamatan', function(e) 
+          {
+              kecamatankondisi();
+          });
+          $(document).on('change', '.kkodenagari', function(e) {
+                nagarikondisi();
+        });
 
-        $(document).on('change', '.kd_kecamatan', function(e) {
-        let kode= "&a=" +$('.kd_kecamatan').val();
+
+          let nagarikondisi=()=>{
+              let kode= "&a=" +$('.kkodenagari').val();
+              $.ajax(
+              {
+                    url: '<?= site_url('kasusbencana/combo_tambah_korong')  ?>',
+                    type: "post",
+                    data: kode,
+                    cache: false,
+                    success: function(response) 
+                    {
+                       var datajson = jQuery.parseJSON(response); 
+                       // alert(datajson.namakorong[0]);
+                        $('.kkodekorong').empty();
+                        for (var i = 0; i < datajson.kodekorong.length; i++) 
+                        {
+                            $('.kkodekorong').append( new Option(datajson.namakorong[i],datajson.kodekorong[i]) );
+                        }
+                    } 
+              });
+          }
+          let kecamatankondisi=()=>{
+                  let kode= "&a=" +$('.kd_kecamatan').val();
               $.ajax({
                     url: '<?= site_url('kasusbencana/combo_tambah_nagari')  ?>',
                     type: "post",
                     data: kode,
                     cache: false,
-                    success: function(response) {
-                        // alert("Golongan harus dipilih");
-                        // $('.tampil_combo').html('');
-                        // $('.tampil_combo').html(response);
-                                  // $.each(response.datanagari, function(i, m) {
-                                  //   $('.' + i).text(m);
-                                  // });
-                                    var datajson = jQuery.parseJSON(response);
-                                    // alert(datajson['data']);
-                                    console.log(datajson.data);
- 
-                            // $("#landingPad").append("<li>" + value + "</li>");
-                        // });
-                        // $('.kkodenagari').empty();
-                        // for (var i = 0; i < 10; i++) {
-                        //     $('.kkodenagari').append( new Option("1","response.ciek") );
-
-                        // }
-                        // // $('.kkodenagari').val("response");
+                    success: function(response) 
+                    {
+                        var datajson = jQuery.parseJSON(response); 
+                        $('.kkodenagari').empty();
+                        for (var i = 0; i < datajson.kodenagari.length; i++) 
+                        {
+                            $('.kkodenagari').append( new Option(datajson.namanagari[i],datajson.kodenagari[i]) );
+                        }
+                        nagarikondisi();
                     }
-                });
-         
-
-    });
-
+                      });
+          }
     });
 
 </script>
@@ -223,10 +239,10 @@ $(document).ready(function(e){
 	    		</td><td>Korong</td>         
 	    		<td>
             <!-- <div class="tampil_combo_korong"></div> -->
-            <select class="form-control select2" style="width: 100%;" name="kkodekorong" id="kkodekorong" required>            
-        		<option selected>-Pilih-</option>                 
+            <select class="form-control kkodekorong" style="width: 100%;" name="kkodekorong" id="kkodekorong" >            
+          		<option>-Pilih-</option>                 
         		<?php foreach($datakorong->result_array() as $k){?>             
-	    		<option value="<?php echo $k['kodekorong']?>"><?php echo $k['namakorong']?></option>             
+    	    		<option value="<?php echo $k['kodekorong']?>"><?php echo $k['namakorong']?></option>             
         		<?php }?>             
         		</select>
 

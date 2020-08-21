@@ -38,23 +38,50 @@ class Kasusbencana extends CI_Controller {
     }
 
 public function combo_tambah_nagari(){
-    $d[0]="";
-    $kecamatan=$this->input->post('a');
-    $datanagari   =$this->Modelkorong->datanagari_Kecam($kecamatan);
+        $id[0]="";
+        $d[0]="";
+        $kecamatan=$this->input->post('a');
+        $datanagari   =$this->Modelkorong->datanagari_Kecam($kecamatan);
+                $i=0;
     foreach($datanagari->result_array() as $k){
-                $d[$k['kodenagari']]=$k['namanagari'];
+
+                $id[$i]=$k['kodenagari'];
+                $i++;
     }
-    $json["data"]=$d;
-echo json_encode($json);    
+                $i=0;
 
-
-
-    // $this->load->view('daerahrawan/tampil_combo_nagari.php', $d);
+        foreach($datanagari->result_array() as $k){
+                $d[$i]=$k['namanagari'];
+                $i++;
+    }
+        $json["kodenagari"]=$id;
+        $json["namanagari"]=$d;
+        echo json_encode($json);    
 }
 public function combo_tambah_korong(){
+    $id[0]="";
+    $d[0]="";
     $nagari=$this->input->post('a');
-    $d['datakorong']   =$this->Modelkorong->datakorong_nagari($nagari);
-    $this->load->view('daerahrawan/tampil_combo_korong.php', $d);
+    $datakorong   =$this->Modelkorong->datakorong_nagari($nagari);
+    $i=0;
+
+            foreach($datakorong->result_array() as $k)
+            {
+
+                $id[$i]=$k['kodekorong'];
+                $i++;
+            }
+    $i=0;
+
+            foreach($datakorong->result_array() as $k){
+                $d[$i]=$k['namakorong'];
+                $i++;
+            }
+
+        $json["kodekorong"]=$id;
+        $json["namakorong"]=$d;
+        echo json_encode($json);  
+
 }
     function simpantransaksi()
     {
